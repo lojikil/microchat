@@ -58,4 +58,16 @@ def updateWho():
     return {"who": who}
 
 
+@route('/file', method=['get', 'post'])
+def fileupload():
+    if request.method == "POST":
+        upload = request.files.get('upload')
+        upload.save('./upload/{0}'.format(upload.filename))
+        return "<b>Saved</b>"
+    else:
+        return """<form action="/file" method="post" enctype="multipart/form-data">
+            Select a file: <input type="file" name="upload" />
+        <input type="submit" value="Start upload" />
+        </form>"""
+
 run(host='0.0.0.0', port=8085)
